@@ -1,0 +1,235 @@
+{UTF-8}
+Correlation time=
+	5
+	~	day
+	~		|
+
+Input noise=
+	Mean input*RANDOM PINK NOISE( 1,st dev 1, Correlation time, seed)
+	~	death/day
+	~	Mean input*RANDOM PINK NOISE( 1,st dev 1, 5, seed)
+	|
+
+Response rate constant=
+	1
+	~	response unit
+	~		|
+
+Effect=
+	Perception*"Effect size (K)"+RANDOM NORMAL( -100 , 100 , 0 , st dev 2 , seed )*Response rate constant
+	~	response unit
+	~	Output*K+Output noise
+	|
+
+Time constant=
+	10
+	~	day
+	~		|
+
+Reality=
+	SIN(Time/Time constant)*Input noise
+	~	death/day
+	~		|
+
+Mean input=
+	1
+	~	death/day [0,10]
+	~		|
+
+st dev 2=
+	0.25
+	~	dmnl [0,0.5]
+	~		|
+
+Perception= 
+	SMOOTH N(Reality, if then else(Reality>Perception,"Delay for increasing trend (L1)",\
+		"Delay for decreasing trend (L2)") , 0 , "Order (O)")
+	~	death/day
+	~		|
+
+"Effect size (K)"=
+	1
+	~	response unit/(death/day)
+	~		|
+
+"Delay for increasing trend (L1)"=
+	10
+	~	day [1.5,?]
+	~		|
+
+"Delay for decreasing trend (L2)"=
+	30
+	~	day [1.5,?]
+	~		|
+
+"Order (O)"=
+	3
+	~	dmnl [1,10,1]
+	~		|
+
+seed=
+	9
+	~	dmnl [0,100,1]
+	~		|
+
+st dev 1=
+	0.25
+	~	dmnl [0,0.5]
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	day
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	day
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	day [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.25
+	~	day [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Arial Unicode MS|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
+10,1,Reality,431,299,43,18,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Perception,586,298,46,20,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,"Delay for increasing trend (L1)",510,200,68,28,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,"Delay for decreasing trend (L2)",662,176,74,22,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,5,"Order (O)",540,373,42,22,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,6,1,2,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,7,3,2,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,8,5,2,0,0,0,0,0,192,1,-1--1--1,,1|(0,0)|
+10,9,Time,400,186,29,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,10,9,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,11,4,2,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,12,Input noise,300,289,51,22,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,13,12,1,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,14,seed,192,345,20,10,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,15,st dev 1,230,218,44,14,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,16,15,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,17,14,12,1,0,0,0,0,192,0,-1--1--1,,1|(220,338)|
+10,18,Effect,771,303,36,14,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,2,18,1,0,0,0,0,192,0,-1--1--1,,1|(693,298)|
+10,20,"Effect size (K)",733,388,62,22,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,21,20,18,1,0,0,0,0,128,0,-1--1--1,,1|(761,343)|
+10,22,TIME STEP,525,413,41,9,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,23,st dev 2,674,359,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,24,23,18,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,25,seed,729,230,34,13,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,26,25,18,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+12,27,0,484,455,206,41,8,7,0,34,-1,0,0,0,0-0-0,0-0-0,Comic Sans MS|||255-0-0,0,0,0,0,0,0
+A linear input-output model for synthetic data generation - change delay lengths (L1 and L2), delay order, and effect size (K). You can also test different random realization by changing seed and st dev paramters.
+12,28,0,1085,312,266,240,8,15,0,0,1,0,0,0,0,0,0,0,0,0
+Input-output
+10,29,Time constant,348,220,34,18,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,30,29,1,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,31,Mean input,193,271,40,10,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,32,31,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,33,Response rate constant,680,264,42,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,34,33,18,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,37,Correlation time,305,350,45,9,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,38,37,12,1,0,0,0,0,128,0,-1--1--1,,1|(311,323)|
+///---\\\
+:GRAPH Input-output
+:TITLE Input-output
+:SCALE
+:VAR Reality|Reality (input)
+:DATASET *1
+:LINE-WIDTH 2
+:VAR Perception|Perception (output step 1)
+:DATASET *1
+:LINE-WIDTH 2
+:VAR Effect|Effect (output step 2)
+:DATASET *1
+:LINE-WIDTH 2
+:L<%^E!@
+1:individual case 6.vdfx
+4:Time
+5:Response rate constant
+9:individual case 6
+19:100,0
+24:0
+25:100
+26:100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:5
+49:1
+50:0
+51:
+52:
+53:
+43:individual case 6
+47:individual case 6
+48:
+60:
+61:65001
+62:1
+63:0
+64:0
+65:1
+66:0
+67:0
+68:0
+69:0
+70:1
+23:0
+18:Test for kian white noise 4.vsc
+20:Test for kian new.lst
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:individual case 6
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
